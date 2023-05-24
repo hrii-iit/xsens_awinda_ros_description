@@ -1,0 +1,2 @@
+# xsens_awinda_ros_description
+xsens_awinda_ros_description contains the URDF generator for the xsens_awinda_ros client
