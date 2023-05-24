@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="launch_joint_state_pub_gui" default="true" />
+    <arg name="launch_rviz" default="true"/>
+    <arg name="rviz_config_file" default="$(find xsens_awinda_ros_description)/rviz/xsens_awinda_visualization.rviz"/>
+
+    <!-- send the coman robot XML to param server -->
+    <!-- param name="robot_description" command="$(find xacro)/xacro.py '$(find coman_urdf)/urdf/coman.urdf.xacro'" /-->
+    <!-- <param name="robot_description" command="$(find skeleton_urdf)/nodes/test.py" /> -->
+
+    <node name="urdf_model_generator" pkg="xsens_awinda_ros_description" type="urdf_model_generator.py" output="screen"/>
+
+    <!-- Robot state and joint state publishers -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" output="screen"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" respawn="true" required="false"/>
+
+    <!-- Launch in RViz -->
+    <node if="$(arg launch_rviz)" type="rviz" name="rviz" pkg="rviz" args="-d $(arg rviz_config_file)"/>
+
+</launch>
