@@ -3,16 +3,19 @@
 
     <arg name="launch_joint_state_pub_gui" default="true" />
     <arg name="launch_rviz" default="true"/>
-    <arg name="rviz_config_file" default="$(find xsens_awinda_ros_description)/rviz/xsens_awinda_visualization.rviz"/>
+    <arg name="rviz_config_file" default="$(find xsens_mvn_ros_description)/rviz/xsens_mvn_visualization.rviz"/>
 
+    <arg name="link_state_topic" default="/xsens/link_states"/>
     <!-- send the coman robot XML to param server -->
     <!-- param name="robot_description" command="$(find xacro)/xacro.py '$(find coman_urdf)/urdf/coman.urdf.xacro'" /-->
     <!-- <param name="robot_description" command="$(find skeleton_urdf)/nodes/test.py" /> -->
 
-    <node name="urdf_model_generator" pkg="xsens_awinda_ros_description" type="urdf_model_generator.py" output="screen"/>
+    <node name="urdf_model_generator" pkg="xsens_mvn_ros_description" type="urdf_model_generator.py" output="screen">
+        <param name="link_state_topic" value="$(arg link_state_topic)"/>
+    </node>
 
     <!-- Robot state and joint state publishers -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" output="screen"/>
+    <node if="$(arg launch_joint_state_pub_gui)" name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" output="screen"/>
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" respawn="true" required="false"/>
 
     <!-- Launch in RViz -->
