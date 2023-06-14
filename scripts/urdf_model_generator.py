@@ -6,8 +6,8 @@
 # import rospy
 
 import rospy
-# from xsens_mvn_ros_msgs.msg import LinkStateArray
-from hrii_xsens.msg import LinkStateArray
+from xsens_mvn_ros_msgs.msg import LinkStateArray
+# from hrii_xsens.msg import LinkStateArray
 from model_description_from_msg import XSensAwindaModel
 import odio_urdf as urdf
 
@@ -20,10 +20,10 @@ if __name__ == '__main__':
     link_state_topic = rospy.get_param("~link_state_topic", "link_states")
 
     # Wait for link state message
-    rospy.loginfo("Waiting for message from \""+link_state_topic+"\" ROS topic...")
-    print(link_state_topic)
-    link_state_msg = rospy.wait_for_message("/xsens/link_states", LinkStateArray)
-    rospy.loginfo("Message from \""+link_state_topic+"\" ROS topic received.")
+    # rospy.loginfo("Waiting for message from \""+link_state_topic+"\" ROS topic...")
+    # link_state_msg = rospy.wait_for_message("/xsens/link_states", LinkStateArray)
+    # rospy.loginfo("Message from \""+link_state_topic+"\" ROS topic received.")
+    link_state_msg = None
 
     hips_width = 0.5
     chest_width = 0.7
@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
     colors = [orange, yellow, red, purple, blue, green]
     # color = random.choice(colors)
-    color = orange
+    color = purple
 
     # xsens_awinda_model = XSensAwindaModel(model_name+"_", 
     #                                 model_name,
