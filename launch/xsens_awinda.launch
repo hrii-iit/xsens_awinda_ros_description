@@ -5,6 +5,7 @@
     <arg name="launch_rviz" default="true"/>
     <arg name="rviz_config_file" default="$(find xsens_mvn_ros_description)/rviz/xsens_mvn_visualization.rviz"/>
 
+    <arg name="model_name" default="skeleton"/>
     <arg name="link_state_topic" default="/xsens/link_states"/>
     <!-- send the coman robot XML to param server -->
     <!-- param name="robot_description" command="$(find xacro)/xacro.py '$(find coman_urdf)/urdf/coman.urdf.xacro'" /-->
@@ -12,6 +13,7 @@
 
     <node name="urdf_model_generator" pkg="xsens_mvn_ros_description" type="urdf_model_generator.py" output="screen">
         <param name="link_state_topic" value="$(arg link_state_topic)"/>
+        <param name="model_name" value="$(arg model_name)"/>
     </node>
 
     <!-- Robot state and joint state publishers -->
