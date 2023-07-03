@@ -75,8 +75,8 @@ class XSensAwindaModel():
 
         # Add links
         self.add_link(prefix+"_shoulder", Origin(), Dim(self.link_size, self.hips_width, self.link_size), self.pelvis_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*t8_c7_shoulder_length))
-        self.add_link(prefix+"_upper_arm", Origin(), Dim(self.link_size, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*c7_shoulder_length))
-        self.add_link(prefix+"_forearm", Origin(), Dim(self.link_size, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*upper_arm_forearm_length))
+        self.add_link(prefix+"_upper_arm", Origin(), Dim(self.link_size, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*upper_arm_forearm_length))
+        self.add_link(prefix+"_forearm", Origin(), Dim(self.link_size, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*forearm_hand_length))
         self.add_link(prefix+"_hand", Origin(rpy="0 3.1415 ${-1.57075"+multiplier+"1.57075}"), Dim(self.link_size, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/hand.stl", str(0.01*self.link_size)+" "+str(0.01*self.link_size)+" "+str(0.005*forearm_hand_length))
 
         # Add joints
@@ -93,8 +93,8 @@ class XSensAwindaModel():
         foot_toe_length = self.get_link_length(prefix+"_foot", prefix+"_toe")
 
         # Add links
-        self.add_link(prefix+"_upper_leg", Origin(), Dim(self.link_size, pelvis_upper_leg_length, self.link_size), self.pelvis_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*pelvis_upper_leg_length))
-        self.add_link(prefix+"_lower_leg", Origin(), Dim(self.link_size, self.link_size, upper_leg_lower_leg_length), self.l5_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*upper_leg_lower_leg_length))
+        self.add_link(prefix+"_upper_leg", Origin(), Dim(self.link_size, pelvis_upper_leg_length, self.link_size), self.pelvis_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*upper_leg_lower_leg_length))
+        self.add_link(prefix+"_lower_leg", Origin(), Dim(self.link_size, self.link_size, upper_leg_lower_leg_length), self.l5_mass, "package://xsens_mvn_ros_description/meshes/arm_leg_bone.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*lower_leg_foot_length))
         self.add_link(prefix+"_foot", Origin(rpy="0 0 1.57075"), Dim(self.link_size, self.link_size, lower_leg_foot_length), self.l5_mass, "package://xsens_mvn_ros_description/meshes/foot.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*lower_leg_foot_length))
         self.add_link(prefix+"_toe", Origin(), Dim(foot_toe_length, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/toe.stl", str(0.02*self.link_size)+" "+str(0.02*self.link_size)+" "+str(0.01*foot_toe_length))
 
@@ -123,9 +123,15 @@ class XSensAwindaModel():
         self.add_link("head", Origin(), Dim(self.link_size, self.link_size, self.link_size), self.l5_mass, "package://xsens_mvn_ros_description/meshes/head.stl", str(0.01*neck_head_length*0.7)+" "+str(0.01*neck_head_length*0.7)+" "+str(0.01*neck_head_length))
 
         # Add spherical joints
-        self.add_spherical_joint("l5_s1", "pelvis", "l5", Origin(xyz="0 0 "+str(pelvis_l5_length), rpy="0 0 0"))
-        self.add_spherical_joint("l4_l3", "l5", "l3", Origin(xyz="0 0 "+str(l5_s3_length), rpy="0 0 0"))
-        self.add_spherical_joint("l1_t12", "l3", "t12", Origin(xyz="0 0 "+str(l3_t12_length), rpy="0 0 0"))
+        # self.add_spherical_joint("l5_s1", "pelvis", "l5", Origin(xyz="0 0 "+str(pelvis_l5_length), rpy="0 0 0"))
+        # self.add_spherical_joint("l4_l3", "l5", "l3", Origin(xyz="0 0 "+str(l5_s3_length), rpy="0 0 0"))
+        # self.add_spherical_joint("l3_t12", "l3", "t12", Origin(xyz="0 0 "+str(l3_t12_length), rpy="0 0 0"))
+        # self.add_spherical_joint("t9_t8", "t12", "t8", Origin(xyz="0 0 "+str(t12_t8_length), rpy="0 0 0"))
+        # self.add_spherical_joint("t1_c7", "t8", "neck", Origin(xyz="0 0 "+str(t8_neck_length), rpy="0 0 0"))
+        # self.add_spherical_joint("c1_head", "neck", "head", Origin(xyz="0 0 "+str(neck_head_length), rpy="0 0 0"))
+        self.add_spherical_joint("pelvis_l5", "pelvis", "l5", Origin(xyz="0 0 "+str(pelvis_l5_length), rpy="0 0 0"))
+        self.add_spherical_joint("l5_l3", "l5", "l3", Origin(xyz="0 0 "+str(l5_s3_length), rpy="0 0 0"))
+        self.add_spherical_joint("l3_t12", "l3", "t12", Origin(xyz="0 0 "+str(l3_t12_length), rpy="0 0 0"))
         self.add_spherical_joint("t9_t8", "t12", "t8", Origin(xyz="0 0 "+str(t12_t8_length), rpy="0 0 0"))
         self.add_spherical_joint("t1_c7", "t8", "neck", Origin(xyz="0 0 "+str(t8_neck_length), rpy="0 0 0"))
         self.add_spherical_joint("c1_head", "neck", "head", Origin(xyz="0 0 "+str(neck_head_length), rpy="0 0 0"))
@@ -175,7 +181,7 @@ class XSensAwindaModel():
                                 joint_origin, name=joint_name, type="fixed"))     
     
     def get_link_state(self, link_name):
-        return None
+        # return None
         for link_state in self.link_state_msg.states:
             if link_state.header.frame_id == link_name:
                 return link_state
@@ -183,7 +189,7 @@ class XSensAwindaModel():
         return None
 
     def get_link_length(self, link_name1, link_name2):
-        return 0.2
+        # return 0.2
         link_pos1 = self.get_link_state(link_name1).pose.position
         link_pos2 = self.get_link_state(link_name2).pose.position
 
