@@ -62,25 +62,26 @@ class XSensAwindaModel():
         # self.addXacroProperty("upperleg_length", self.upperleg_length)
         # self.addXacroProperty("leg_length", self.leg_length)
 
-        pelvis_mass = 1.23
+        pelvis_mass = 0
+        l5_mass = 1.23
 
         # Add torso
         # TODO:
         # - REMOVE SELF MODEL PREFIX
         # - Add yaml file
-        self.addLink("base_link")
-        self.addFixedJoint(self, "base_link", "pelvis", Origin(rpy="0 0 0",xyz="0 0 0"))
+        # self.addLink("base_link")
+        # self.addFixedJoint("base_link_pelvis", "base_link", "pelvis", Origin(rpy="0 0 0",xyz="0 0 0"))
         self.addLink("pelvis", Origin(rpy="0 0 0",xyz="0 0 0"), 
                      Dim(self.link_size, self.hips_width, self.link_size), pelvis_mass)
         self.addLink("l5", Origin(rpy="0 0 0",xyz="0 0 0"), 
-                     Dim(self.link_size, self.hips_width, self.link_size), pelvis_mass)
+                     Dim(self.link_size, self.link_size, self.link_size), l5_mass)
         
         # self.addRevoluteJoint("l5_s1", "pelvis", "l5",
-                            #    Origin(rpy="0 0 0",xyz="0 0 0"), Axis(xyz="0 0 1"))
+        #                        Origin(rpy="0 0 0",xyz="0 0 0"), Axis(xyz="0 0 1"))
 
 
         self.addSphericalJoint("l5_s1", "pelvis", "l5", Origin(rpy="0 0 0",xyz="0 0 0"))
-        print(self.human)
+        # print(self.human)
         
     def addLink(self, link_name, link_origin=None, link_dim=None, mass=0.0):
         if mass == 0.0:
@@ -110,9 +111,9 @@ class XSensAwindaModel():
         self.addRevoluteJoint(joint_name+"_x", parent_link_name, parent_link_name+"_link_rot_x",
                             joint_origin, Axis(xyz="1 0 0"))
         self.addRevoluteJoint(joint_name+"_y", parent_link_name+"_link_rot_x", parent_link_name+"_link_rot_y",
-                            Origin(), Axis(xyz="0 1 0"))
+                            Origin(rpy="0 0 0",xyz="0 0 0"), Axis(xyz="0 1 0"))
         self.addRevoluteJoint(joint_name+"_z", parent_link_name+"_link_rot_y", child_link_name,
-                            Origin(), Axis(xyz="0 0 1"))
+                            Origin(rpy="0 0 0",xyz="0 0 0"), Axis(xyz="0 0 1"))
         
 
     def addRevoluteJoint(self, joint_name, parent_link_name, child_link_name, joint_origin, axis):

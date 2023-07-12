@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(xsens_awinda_ros_description)
+project(xsens_mvn_ros_description)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp

@@ -1,13 +1,8 @@
 #!/usr/bin/python3
 
-
-# 
-# import random
-# import rospy
-
 import rospy
-from xsens_awinda_ros_msgs.msg import LinkStateArray
-from model_description import XSensAwindaModel
+from xsens_mvn_ros_msgs.msg import LinkStateArray
+from model_description_from_msg import XSensAwindaModel
 import odio_urdf as urdf
 
 if __name__ == '__main__':
@@ -15,13 +10,14 @@ if __name__ == '__main__':
     rospy.init_node('urdf_model_generator', anonymous=True)
 
     # Get ROS params
-    model_name = rospy.get_param("model_name", "human")
-    link_state_topic = rospy.get_param("link_state_topic", "link_states")
+    model_name = rospy.get_param("~model_name", "human")
+    link_state_topic = rospy.get_param("~link_state_topic", "link_states")
 
     # Wait for link state message
-    # rospy.loginfo("Waiting for message from \""+link_state_topic+"\" ROS topic...")
-    # link_state_msg = rospy.wait_for_message(link_state_topic, LinkStateArray)
-    # rospy.loginfo("Message from \""+link_state_topic+"\" ROS topic received.")
+    rospy.loginfo("Waiting for message from \""+link_state_topic+"\" ROS topic...")
+    link_state_msg = rospy.wait_for_message("/xsens/link_states", LinkStateArray)
+    rospy.loginfo("Message from \""+link_state_topic+"\" ROS topic received.")
+    # link_state_msg = None
 
     hips_width = 0.5
     chest_width = 0.7
@@ -33,6 +29,18 @@ if __name__ == '__main__':
     torso_height = 0.8
     link_size = 0.1
 
+    body_height = 1.8170
+    foot_length = 0.2870
+    shoulder_height = 1.4434
+    elbow_span = 0.94
+    wrist_span = 1.43
+    arm_span = 182.0
+    hip_height = 0.9410
+    hips_width = 0.25
+    knee_height = 0.5320
+    ankle_height = 0.093
+    extra_shoe_sole_thickness = 0.026
+
     # Define colors
     orange = urdf.Material(urdf.Color(rgba="0.059 0.475 0.443 1.0"), name="orange")
     yellow = urdf.Material(urdf.Color(rgba="0.961 0.918 0.078 1.0"), name="yellow")
@@ -43,22 +51,28 @@ if __name__ == '__main__':
 
     colors = [orange, yellow, red, purple, blue, green]
     # color = random.choice(colors)
-    color = orange
+    color = purple
 
-    namespace = "model"
+    # xsens_awinda_model = XSensAwindaModel(model_name+"_", 
+    #                                 model_name,
+    #                                 color, 
+    #                                 hips_width,
+    #                                 torso_height,
+    #                                 chest_width,
+    #                                 head_size,
+    #                                 arm_length,
+    #                                 forearm_length,
+    #                                 upperleg_length,
+    #                                 leg_length,
+    #                                 link_size)
 
-    xsens_awinda_model = XSensAwindaModel(namespace+"_", 
-                                    namespace,
+    xsens_awinda_model = XSensAwindaModel(model_name+"_", 
+                                    model_name,
                                     color, 
-                                    hips_width,
-                                    torso_height,
-                                    chest_width,
-                                    head_size,
-                                    arm_length,
-                                    forearm_length,
-                                    upperleg_length,
-                                    leg_length,
-                                    link_size)
+                                    link_state_msg)
+
+
+
 
     xsens_awinda_model.generate_model()
 

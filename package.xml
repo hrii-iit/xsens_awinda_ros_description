@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package format="2">
 
-    <name>xsens_awinda_ros_description</name>
+    <name>xsens_mvn_ros_description</name>
     <version>0.0.1</version>
     
-    <description> The xsens_awinda_ros_description contains an URDF model generator</description>
+    <description> The xsens_mvn_ros_description contains an URDF model generator</description>
 
     <maintainer email="luca.fortini@iit.it">Luca Fortini</maintainer>
     <maintainer email="mattia.leonori@iit.it">Mattia Leonori</maintainer>
@@ -12,7 +12,7 @@
 
     <license>BSD</license>
 
-    <url>https://github.com/hrii-iit/xsens_awinda_ros_description</url>
+    <url>https://github.com/hrii-iit/xsens_mvn_ros_description</url>
     <author email="mattia.leonori@iit.it">Mattia Leonori</author>
     
     <buildtool_depend>catkin</buildtool_depend>
