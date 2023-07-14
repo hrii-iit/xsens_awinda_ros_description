@@ -11,7 +11,7 @@
     <!-- param name="robot_description" command="$(find xacro)/xacro.py '$(find coman_urdf)/urdf/coman.urdf.xacro'" /-->
     <!-- <param name="robot_description" command="$(find skeleton_urdf)/nodes/test.py" /> -->
 
-    <node name="urdf_model_generator" pkg="xsens_mvn_ros_description" type="urdf_model_generator.py" output="screen">
+    <node name="avatar_generator" pkg="xsens_mvn_ros_description" type="avatar_generator.py" output="screen">
         <param name="link_state_topic" value="$(arg link_state_topic)"/>
         <param name="model_name" value="$(arg model_name)"/>
     </node>

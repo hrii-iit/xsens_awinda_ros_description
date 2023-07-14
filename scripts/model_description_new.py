@@ -117,7 +117,7 @@ class XSensAwindaModel():
             Visual(
                 Origin(rpy = "0 0 0", xyz = "0 0 -${upperleg_length/2}"),
                 Material(name = self.color.name),
-                Geometry(Cylinder(radius = "${link_size/2}", length="${upperleg_length}"), name = "l_upperleg_visual")
+                Geometry(Mesh(scale= "0.03937 0.03937 0.03937", filename= "package://xsens_mvn_ros/meshes/visual/l_femur.stl"), name= "l_femur")
             ),
             name = "l_upperleg"
             ),
